@@ -412,7 +412,7 @@ routeExp.route("/generate").post(async function (req, res) {
     var all_employes = await UserSchema.find({occupation:"user"});
     for (e=0;e<all_employes.length;e++){
       newsheet.SheetNames.push(all_employes[e].num_agent);
-      var datatowrite = await TimesheetsSchema.find({num_agent:all_employes[e].num_agent});
+      var datatowrite = await TimesheetsSchema.find({num_agent:all_employes[e].num_agent,validation:true});
       data.push(["MCODE","Number of Agent","Project Name","Date","Task ","Start Time","End Time"]);
       for (i=0;i<datatowrite.length;i++){
           var ligne = [
