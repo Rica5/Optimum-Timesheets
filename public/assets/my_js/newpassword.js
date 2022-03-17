@@ -43,6 +43,7 @@ function verify_pass1(){
         pw1.removeAttribute("style");
         pw1_done = true;
     }
+    verify_pass2();
     verify_all();
 }
 //verify pass 2
