@@ -480,8 +480,11 @@ routeExp.route("/generate").post(async function (req, res) {
 })
 //download
 routeExp.route("/download").get(async function (req, res) {
-    var file = "Timesheets.xlsx";
+  session = req.session;
+  if (session.occupation == "admin"){
+      var file = "Timesheets.xlsx";
     res.download(file);
+  }
 })
 //Logout
 routeExp.route("/logout").get(function (req, res) {
