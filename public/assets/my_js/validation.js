@@ -17,6 +17,7 @@ function validate_false(denied,m_code,task){
 }
 function sendclick(){
     sendRequest_false('/denied',denie,mcode,rejected.value,task);
+    rejected.value="";
 }
 
 function sendRequest_true(url,id,ligne) {
@@ -25,7 +26,7 @@ function sendRequest_true(url,id,ligne) {
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-          ligne.remove();
+         window.location = "/validation";
       }
     };
     http.send("id="+id);
@@ -36,8 +37,7 @@ function sendRequest_true(url,id,ligne) {
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        reason.style.display = "none";
-        document.getElementById(id).remove();
+        window.location ="/validation";
       }
     };
     http.send("id="+id+"&m_code="+mcode+"&task="+task+"&message="+message);
