@@ -8,15 +8,17 @@ var rejected = document.getElementById("rejected");
 var denie ="";
 var mcode = "";
 var task = "";
+var projetrej = "";
 //Denied if false
-function validate_false(denied,m_code,task){
+function validate_false(denied,m_code,tasks,projetr){
     reason.style.display = "block";
     denie = denied;
     mcode = m_code;
-    task = task;
+    task = tasks;
+    projetrej = projetr;
 }
 function sendclick(){
-    sendRequest_false('/denied',denie,mcode,rejected.value,task);
+    sendRequest_false('/denied',denie,mcode,rejected.value,task,projetrej);
     rejected.value="";
 }
 
