@@ -6,15 +6,16 @@
 		<meta charset="UTF-8">
 
 		<title>Timesheets of employees</title>
-		<meta name="keywords" content="Optimum Solution" />
+		<meta name="keywords" content="Optimum timesheets" />
 		<meta name="description" content="Timesheets">
-		<meta name="author" content="dev solumada">
+		<meta name="author" content="dev Solumada">
 
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 		<!-- Web Fonts  -->
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+		<link rel="icon" type="image/png" href="assets/images/logo opt.png" />
 
 		<!-- Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
@@ -63,7 +64,7 @@
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
 								<span class="name">Optimum timesheets</span>
-								<span class="role">administrator</span>
+								<span class="role"><%= admin %></span>
 							</div>
 			
 							<i class="fa custom-caret"></i>
@@ -72,7 +73,7 @@
 						<div class="dropdown-menu">
 							<ul class="list-unstyled">
 								<li>
-									<a role="menuitem" tabindex="-1" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
+									<a role="menuitem" tabindex="-1" href="/exit_a"><i class="fa fa-power-off"></i> Logout</a>
 								</li>
 							</ul>
 						</div>
@@ -115,6 +116,16 @@
 													Validation Page
 												</a>
 											</li>
+											<li>
+												<a href="/userlist">
+													Users Lists
+												</a>
+											</li>
+											<li>
+												<a href="/about">
+													About Project
+												</a>
+											</li>
 										</ul>
 									</li>
 									
@@ -152,32 +163,69 @@
 					<section class="panel">
 						<header class="panel-heading">
 							<h2 class="panel-title text-center">Timesheets of employees</h2>
-							<hr>
-							<div class="row">
-								<div class="col-sm-6">	
-								<a href="/newemployee"><button class="btn btn-success btn-sm"><i class="fa fa-plus"></i>   NEW EMPLOYE</button></a>
-								<button id="pnew" onclick="newproject_listen()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>   NEW PROJECT</button>
-								
-							</div>
-							<div id="notif" class="col-sm-6 notification">
-								
-							</div>
-							</div>
-							
-							<div id="addproject" class="card" style="width: 100rem;margin-left: 120px;display: none;">
-								<div class="card-body">
-								  <h5 class="card-title">Create new project</h5>
-								  <h6 class="card-subtitle mb-2 text-muted">Project Name</h6>
-								  <div class="row">
-									  <div class="col-sm-6"><input onkeyup="project()" name="newproject" id="newproject" type="text" class="form-control input-lg" style="height: 35px;"/></div>
-									  <div class="col-sm-6"><button id="add_project" onclick="add_new_project()" class="btn btn-primary " ><i class="fa fa-plus"></i>  ADD</button>
-									  <button class="btn btn-danger " onclick="cancel()">CANCEL</button></div>
-								  </div>
-								</div>
-							  </div>
-					
 						</header>
 						<div class="panel-body">
+							<div class="row ">
+								<div class="col-md-3 pull-right">
+									<label>End Date</label>
+									<div class="row">
+										<div class="col-md-10">
+											<div class="input-group input-group-icon">
+												<input name="enddate" id="enddate"  type="date" class="form-control" required/>
+											</div>
+										</div>
+										<div class="col-md-1 pull-right">
+											<button type="button" class="btn btn-primary btn-circle btn-sm pull-right" onclick='sde()'><i class="fa fa-refresh"></i></button>
+										</div>
+									</div>
+									
+									
+								</div>
+								<div class="col-md-3 pull-right">
+									<label>Start Date</label>
+									<div class="row">
+										<div class="col-md-10">
+											<div class="input-group input-group-icon">
+												<input name="startdate" id ="startdate" type="date" class="form-control" required/>
+											</div>
+										</div>
+										<div class="col-md-1 pull-right">
+											<button type="button" class="btn btn-primary btn-circle btn-sm pull-right" onclick='sdr()'><i class="fa fa-refresh"></i></button>
+										</div>
+									</div>
+								
+								</div>
+								<div class="col-md-3 pull-right">
+									<div class="input-group input-group-icon">
+										<label>Project</label>
+										<select id="project" name="project" class="form-control" required>
+											<option value="">Choose a Project</option>
+											<% available_project.forEach(function(project) { %>
+												<option value="<%= project.project_name %>"><%= project.project_name %></option>
+												<% }); %>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-3 pull-right">
+									<label>M-CODE</label>
+								<div class="input-group input-group-icon">
+									<input name="mcode" id="mcode" type="text" class="form-control" required/>
+								</div>
+								</div>
+								
+								<div class="col-md-3 pull-right">
+									<br>
+								<div class="input-group input-group-icon">
+									<button id="filter" onclick="filtrate()" class="btn btn-warning btn-block pull-right text-center"><b>FILTER DATA</b><img src="assets/images/loading-filter.gif" style="width: 40px;height:auto;display:none;" id="filter_load"></button>
+								</div>
+								
+								</div>
+							</div>
+							<br>
+							<header class="panel-heading">
+								<h2 id="ch_title" class="panel-title text-center">All times logged</h2>
+								</header>
+								<br>
 							<table class="table table-bordered table-striped mb-none" id="datatable-default" >
 								<thead style="background-color: #619FCB;color:white">
 									<tr>
@@ -192,26 +240,24 @@
 								</thead>
 								<tbody id ="alldata">
 									<% timesheets.forEach(function(timesheets) { %>
-											<tr>
-												<td style="vertical-align: center;"><%= timesheets.m_code %></td>
-												<td><%= timesheets.num_agent %></td>
-												<td><%= timesheets.projects %></td>
-												<td><%= timesheets.date %></td>
-												<td><%= timesheets.time_start %></td>
-												<td><%= timesheets.time_end %></td>
-												<td><%= timesheets.task %></td>
-											</tr>		   
-									  <% }); %>
+										<tr id="<%= timesheets._id %>">
+											<td><%= timesheets.m_code %></td>
+											<td><%= timesheets.num_agent %></td>
+											<td><%= timesheets.projects %></td>
+											<td><%= timesheets.date %></td>
+											<td><%= timesheets.time_start %></td>
+											<td><%= timesheets.time_end %></td>
+											<td><%= timesheets.task %></td>
+										</tr>		   
+								  <% }); %>
 								</tbody>
 							</table>
 						</div>
 						<br>
 						<div class="row">
-							<div class="col-sm-8">
+							<div class="col-sm-12">
 								<a class="mb-xs mt-xs mr-xs modal-with-zoom-anim" href="#modalAnim"><button id="generate_excel" class="btn btn-primary btn-mb pull-left"><i class="fa fa-file-excel-o" style="color:lightgreen"></i> GENERATE EXCEL </button><img id="loading"  src="assets/images/loading.gif" style="width: 40px;height:auto;display:none;"></a>
-							</div>
-							<div class="col-sm-4">
-								<a href="/download"><button id="download" class="btn btn-success btn-mb pull-right"><i class="fa fa-file-download"></i> DOWNLOAD EXCEL</button></a>
+								<a href="/download"><button id="download" onclick="downloads()" class="btn btn-success btn-mb pull-right"><i class="fa fa-download"></i> DOWNLOAD</button></a>
 							</div>
 						</div>
 					</section>
@@ -242,13 +288,107 @@
 			</section>
 		</div>
 			</div>
+			<div class="panel-body">
+				
+
+				<!-- Modal Form -->
+				<div id="modalForm" class="modal-block modal-block-primary mfp-hide">
+					<section class="panel">
+						<header class="panel-heading">
+							<h2 class="panel-title">Add new administrator</h2>
+						</header>
+						<div class="panel-body">
+								<div class="form-group mt-lg">
+									<label class="col-sm-3 control-label">Email</label>
+									<div class="col-sm-9">
+										<input type="email" id="email" name="email" onkeyup="check()" class="form-control" placeholder="Enter Email here..." required/>
+									</div>
+								</div>
+								<br>
+						</div>
+						<footer class="panel-footer">
+							<div class="row">
+								<div class="col-md-12 text-right">
+									<button id="admin" class="btn btn-primary modal-confirm" onclick="add_admin()">ADD</button>
+									<button class="btn btn-default modal-dismiss">Cancel</button>
+								</div>
+							</div>
+						</footer>
+					</section>
+				</div>
+
+			</div>
 		</section>
 		<script>
-			if ('<%= timesheets %>'.length == 0){
-				document.getElementById("generate_excel").disabled = true;
+			var load = document.getElementById("filter_load");
+			var gen = document.getElementById("generate_excel");
+			var download = document.getElementById("download");
+			var table = document.getElementById("datatable-default");
+			var parentelement = document.getElementById("alldata");
+			var mcodes = document.getElementById("mcode");
+			var projects = document.getElementById("project");
+			var datestarts = document.getElementById("startdate");
+			var dateends = document.getElementById("enddate");
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const code = urlParams.get('mcode');
+			const proj = urlParams.get('project');
+			const start = urlParams.get('start');
+			const end = urlParams.get('end');
+			if (queryString.length != 0){
+				document.getElementById("ch_title").innerHTML = "Your filtered data";
+				mcodes.value = code;
+				projects.value = proj;
+				datestarts.value = start;
+				dateends.value = end;
 			}
-			else{
-				document.getElementById("generate_excel").disabled = false;
+			check_button('<%= timesheets.length %>');
+			function filtrate(){
+				load.style.display = "block";
+				sendRequest_filter("/filter",mcodes.value,projects.value,datestarts.value,dateends.value);
+			}
+
+			function sendRequest_filter(url,mcode,project,startdate,enddate) {
+				var http = new XMLHttpRequest();
+				http.open("POST", url, true);
+				http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				http.onreadystatechange = function () {
+				  if (this.readyState == 4 && this.status == 200) {
+					  if (this.responseText == "retour"){
+						  window.location = "/";
+					  }
+					  else{
+						if (mcodes.value =="" && projects.value =="" && datestarts.value == "" && dateends.value==""){
+							window.location = "/employees";
+						}
+						else{
+							document.getElementById("download").disabled = true;
+						load.style.display = "none";
+						window.location = "/employees?mcode="+mcode+"&project=" +project+"&start=" +startdate+"&end=" +enddate;
+						}
+						
+					  }
+					
+				  }
+				};
+				http.send("mcode="+mcode+"&project="+project+"&startdate="+startdate+"&enddate="+enddate);
+			  }
+			function check_button(count){
+				if (count == 0){
+					document.getElementById("generate_excel").disabled = true;
+					document.getElementById("ch_title").innerHTML = "No data";
+				}
+				else{
+					document.getElementById("generate_excel").disabled = false;
+					
+				}
+				
+			}
+			function sdr(){
+				document.getElementById("startdate").value = "";
+			}
+			function sde(){
+				document.getElementById("enddate").value = "";
 			}
 		</script>
 
@@ -282,7 +422,6 @@
 		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
 		<script src="assets/javascripts/ui-elements/examples.modals.js"></script>
-		<script src="assets/my_js/addnewproject.js"></script>
 		<script src="assets/my_js/generate.js"></script>
 		<script>
 			

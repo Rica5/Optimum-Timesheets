@@ -6,15 +6,16 @@
 		<meta charset="UTF-8">
 
 		<title>Validate time logged</title>
-		<meta name="keywords" content="Optimum Solution" />
-		<meta name="description" content="Timesheets">
-		<meta name="author" content="dev solumada">
+		<meta name="keywords" content="HTML5 Admin Template" />
+		<meta name="description" content="Porto Admin - Responsive HTML5 Template">
+		<meta name="author" content="okler.net">
 
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 		<!-- Web Fonts  -->
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+		<link rel="icon" type="image/png" href="assets/images/logo opt.png" />
 
 		<!-- Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
@@ -72,7 +73,7 @@
 						<div class="dropdown-menu">
 							<ul class="list-unstyled">
 								<li>
-									<a role="menuitem" tabindex="-1" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
+									<a role="menuitem" tabindex="-1" href="/exit_a"><i class="fa fa-power-off"></i> Logout</a>
 								</li>
 							</ul>
 						</div>
@@ -113,6 +114,16 @@
 											<li class="nav-active">
 												<a href="/validation">
 													Validation Page
+												</a>
+											</li>
+											<li>
+												<a href="/userlist">
+													Users Lists
+												</a>
+											</li>
+											<li>
+												<a href="/about">
+													About Project
 												</a>
 											</li>
 											
@@ -185,7 +196,7 @@
 														<button type="button" class="btn btn-success btn-circle btn-sm" onclick="validate_true('<%= timesheets._id %>')"><i class="fa fa-check"></i></button>
 													</div>
 													<div class="col-sm-5 text-right">
-														<a class="modal-with-form" href="#modalForm"><button type="button" class="btn btn-danger btn-circle btn-sm text-right" onclick="validate_false('<%= timesheets._id %>','<%= timesheets.m_code %>','<%= timesheets.task %>')"><i class="fa fa-ban"></i></button></a>
+														<a class="modal-with-form" href="#modalForm"><button type="button" class="btn btn-danger btn-circle btn-sm text-right" onclick='validate_false("<%= timesheets._id %>","<%= timesheets.m_code %>","<%= timesheets.task %>","<%= timesheets.projects %>")'><i class="fa fa-ban"></i></button></a>
 													</div>
 												</div>
 													
@@ -250,7 +261,7 @@
 				<footer class="panel-footer">
 					<div class="row">
 						<div class="col-md-12 text-right">
-							<a href="/valideall"><button class="btn btn-primary">Confirm</button></a>
+							<button class="btn btn-primary" onclick="valide_all()">Confirm</button>
 							<button class="btn btn-default modal-dismiss">Cancel</button>
 						</div>
 					</div>
@@ -258,7 +269,7 @@
 			</section>
 		</div>
 		<script>
-			if ('<%= timesheets %>'.length <=1){
+			if ('<%= timesheets.length %>' <= 1){
 				document.getElementById("vall").disabled = true;
 			}
 			else{
@@ -299,6 +310,7 @@
 		<script src="assets/my_js/validation.js"></script>
 		<script src="assets/javascripts/ui-elements/examples.modals.js"></script>
 		<script>
+			
 			
 		</script>
 	</body>

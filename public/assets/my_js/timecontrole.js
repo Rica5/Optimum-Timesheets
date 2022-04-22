@@ -6,6 +6,7 @@ let time_done = false;
 let task_done = false;
 let project_done = false;
 let date_done = false;
+var done =true;
 //Field
 var project = document.getElementById("project");
 var date = document.getElementById("date");
@@ -91,7 +92,10 @@ function verify_all(){
   }
 }
 function savetime(){
-    sendRequest('/savetime',project.value,date.value,timestart.value,timeend.value,task.value);
+	if(done){
+		done = false;
+    sendRequest('/savetime',project.value,date.value,timestart.value,timeend.value,task.value.replace( /[\r\n]+/gm, " " ));
+	}
 }
 function sendRequest(url,projects,dates,timestarts,timeends,tasks) {
   var http = new XMLHttpRequest();
@@ -99,12 +103,18 @@ function sendRequest(url,projects,dates,timestarts,timeends,tasks) {
   http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
+      if (this.responseText == "retour"){
+		      window.location = "/";
+	      }
+      else{
       project.value ="";date.value="";timestart.value="";timeend.value="";task.value="";
       btn.disabled = true;
         alerts.style.display = "block";
         alerts.setAttribute('style',"color:green;");
         alerts.innerHTML = this.responseText;
         project_done=false;date_done=false;time_done=false,task_done=false;
+	      done =true;
+      }
     }
   };
   http.send("project=" + projects + "&date=" + dates + "&start=" + timestarts+ "&end=" + timeends+ "&task=" + tasks);

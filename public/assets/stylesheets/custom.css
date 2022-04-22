@@ -28,7 +28,7 @@
         border-radius: 5px;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
         display: none;
-        animation: fadeOut 5s;
+        animation: fadeOut 2s;
         color: white;
     }
     @keyframes fadeOut {
